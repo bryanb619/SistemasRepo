@@ -58,9 +58,11 @@ public class GameHandler : MonoBehaviour
 
 
     // FMOD
+    //FMOD.Studio.EventInstance _arrival;
+    //FMOD.Studio.EventInstance _door;
+    //FMOD.Studio.EventInstance _music;
 
- 
-   
+
 
 
     //bools 
@@ -71,6 +73,15 @@ public class GameHandler : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+
+        // FMOD Sound location
+        //_arrival = FMODUnity.RuntimeManager.CreateInstance("event:/InGame/LevelArrival");
+
+        //_door = FMODUnity.RuntimeManager.CreateInstance("event:/InGame/Doors");
+        
+        //_music = FMODUnity.RuntimeManager.CreateInstance("event:/InGame/QuickSong");
+
+
 
         Scene1.SetActive(true);
         Scene2.SetActive(false);
@@ -91,14 +102,16 @@ public class GameHandler : MonoBehaviour
 
         FloorText.text = "1";
 
+        RuntimeManager.PlayOneShot("event:/InGame/LevelArrival");
+        RuntimeManager.PlayOneShot("event:/InGame/Doors");
+
 
         //Shake = FindObjectOfType<CameraShake>();
 
         //CheatBarrier = GetComponentInChildren<Barrier>();   
 
 
-        RuntimeManager.PlayOneShot("event:/InGame/LevelArrival");
-        RuntimeManager.PlayOneShot("event:/InGame/Doors");
+
 
 
 
@@ -111,6 +124,7 @@ public class GameHandler : MonoBehaviour
 
 
     }
+
 
     // Update is called once per frame
     void Update()
@@ -248,12 +262,14 @@ public class GameHandler : MonoBehaviour
     private void ClosingDoorSound()
     {
         RuntimeManager.PlayOneShot("event:/InGame/Doors");
+        //_door.start(); 
     }
 
 
     private void SceneLoader(int Floor)
     {
-        
+       
+
 
         if (ritualState == GameState.ACTIVE)
         {
@@ -456,9 +472,13 @@ public class GameHandler : MonoBehaviour
             }
 
         }
-        
         state = DoorState.Opening;
-        RuntimeManager.PlayOneShot("event:/InGame/LevelArrival");
+
+
+
+        //RuntimeManager.PlayOneShot("event:/InGame/Doors");
+        
+
 
 
     }
@@ -493,7 +513,8 @@ public class GameHandler : MonoBehaviour
             if (leftOpen && RightOpen)
             {
                 state = DoorState.Open;
-      
+                RuntimeManager.PlayOneShot("event:/InGame/LevelArrival"); 
+                //_arrival.start();
                 print("OPEN");
 
             }
@@ -529,6 +550,8 @@ public class GameHandler : MonoBehaviour
      
                 state = DoorState.Closed;
                 RuntimeManager.PlayOneShot("event:/InGame/QuickSong");
+                //_music.start();
+
 
                 //CheatBarrier.DeactivateColl();
                 print("CLOSED");
@@ -615,11 +638,13 @@ public class GameHandler : MonoBehaviour
         
         
         yield return new WaitForSeconds(6F);
-        
-        
-        
+
+
         //Shake._canShake = false;
-        
+       // RuntimeManager.PlayOneShot("event:/InGame/LevelArrival");
+        //_music.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
+
+        //_arrival.start();
         SceneLoader(selectedFloor);
         
     }
@@ -644,7 +669,10 @@ public class GameHandler : MonoBehaviour
 
     private void OnDestroy()
     {
-       
+        //_arrival.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
+        //_door.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
+        //_music.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
+
     }
 
     
