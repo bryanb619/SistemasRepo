@@ -572,7 +572,7 @@ public class GameHandler : MonoBehaviour
             if (floorSequenceIndex == floorSequence.Length)
             {
 
-                SceneManager.LoadScene("_EndGame"); 
+                //SceneManager.LoadScene("_EndGame"); 
                 
                 print("final");
 
