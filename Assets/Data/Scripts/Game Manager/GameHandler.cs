@@ -4,14 +4,13 @@ using TMPro;
 using System.Collections;
 using System;
 using FMODUnity;
-using UnityEngine.Events; 
 
 public class GameHandler : MonoBehaviour
 {
     public int[] floorSequence;
     public int floorSequenceIndex = 0;
 
-    public enum GameState {ACTIVE, BROKEN, FINISH, DEAD}
+    public enum GameState {ACTIVE, BROKEN}
     //[HideInInspector] 
     private GameState ritualState; 
 
@@ -28,7 +27,7 @@ public class GameHandler : MonoBehaviour
 
     [SerializeField] GameObject Scene2, Scene3, Scene4, Scene5, Scene8, Scene9;
 
-    [SerializeField] private GameObject ISCENE10; 
+    [SerializeField] private GameObject ISCENE1, ISCENE2,ISCENE3; 
 
 
 
@@ -56,16 +55,7 @@ public class GameHandler : MonoBehaviour
     private
         TextMeshProUGUI FloorText;
 
-
-    // FMOD
-    //FMOD.Studio.EventInstance _arrival;
-    //FMOD.Studio.EventInstance _door;
-    //FMOD.Studio.EventInstance _music;
-
-
-
-
-    //bools 
+    private bool _gameOver; 
 
 
     [HideInInspector] public bool _canInteract; 
@@ -74,24 +64,17 @@ public class GameHandler : MonoBehaviour
     void Start()
     {
 
-        // FMOD Sound location
-        //_arrival = FMODUnity.RuntimeManager.CreateInstance("event:/InGame/LevelArrival");
-
-        //_door = FMODUnity.RuntimeManager.CreateInstance("event:/InGame/Doors");
-        
-        //_music = FMODUnity.RuntimeManager.CreateInstance("event:/InGame/QuickSong");
-
-
-
         Scene1.SetActive(true);
         Scene2.SetActive(false);
         Scene3.SetActive(false);
         Scene4.SetActive(false);
         Scene5.SetActive(false);
-        
-
         Scene8.SetActive(false);
         Scene9.SetActive(false);
+
+        ISCENE1.SetActive(false);
+        ISCENE2.SetActive(false);
+        ISCENE3.SetActive(false);
 
         //ISCENE10.SetActive(true);
 
@@ -101,23 +84,6 @@ public class GameHandler : MonoBehaviour
      
 
         FloorText.text = "1";
-
-        RuntimeManager.PlayOneShot("event:/InGame/LevelArrival");
-        RuntimeManager.PlayOneShot("event:/InGame/Doors");
-
-
-        //Shake = FindObjectOfType<CameraShake>();
-
-        //CheatBarrier = GetComponentInChildren<Barrier>();   
-
-
-
-
-
-
-        //IScene2.SetActive(false);
-        //IScene3.SetActive(false);
-        //IScene4.SetActive(false);
 
 
 
@@ -129,7 +95,7 @@ public class GameHandler : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //RitualCheck();
+        RitualCheck();
 
        
 
@@ -154,15 +120,21 @@ public class GameHandler : MonoBehaviour
 
     private void RitualCheck()
     {
-        if(ritualState == GameState.FINISH && Input.anyKey)
+        float elapsed = 0F;
+        
+        if(_gameOver)
         {
-            SceneManager.LoadScene("StartMenu"); 
+            print("GAME OVER IN CHECK"); 
+            elapsed += Time.deltaTime;
+            if(elapsed>=3F)
+            {
+                print("GAME OVER IN timer");
+                SceneManager.LoadScene("_EndGame"); 
+            }
         }
-        else if(ritualState == GameState.DEAD)
-        {
-            SceneManager.LoadScene("_EndGame");
-        }
+        
     }
+
 
     private void ConditionCheck()
     {
@@ -396,7 +368,7 @@ public class GameHandler : MonoBehaviour
                         //StartCoroutine(TimeOutToFinish());
 
                         //SceneManager.LoadScene("_EndGame");
-
+                        StartCoroutine(GameEnd()); 
                         break;
                     }
                 default: { break; }
@@ -409,7 +381,7 @@ public class GameHandler : MonoBehaviour
             switch (WrongFloor)
             {
 
-                case 1:
+                case 2:
                     {
                         // TO DO: 
                         // disable current scene
@@ -423,12 +395,16 @@ public class GameHandler : MonoBehaviour
                         Scene8.SetActive(false);
                         Scene9.SetActive(false);
 
+
+                        ISCENE1.SetActive(true); 
+                        ISCENE2.SetActive(false);
+
                         FloorText.text = "8";
                         Debug.Log("Scene previous: disabled / Scene 8: enabled");
                         break;
                     }
 
-                case 2:
+                case 3:
                     {
                         Scene1.SetActive(false);
                         Scene2.SetActive(false); 
@@ -439,13 +415,17 @@ public class GameHandler : MonoBehaviour
                         Scene8.SetActive(false);
                         Scene9.SetActive(false);
 
+
+                        ISCENE1.SetActive(false); 
+                        ISCENE2.SetActive(true);
+
                         FloorText.text = "9";
 
                         Debug.Log("Scene 8: disabled / Scene 9: enabled");
                         break;
                     }
 
-                case 3:
+                case 4:
                     {
                         Scene1.SetActive(false);
                         Scene2.SetActive(false); 
@@ -458,13 +438,16 @@ public class GameHandler : MonoBehaviour
 
                         //ISCENE10.SetActive(true);
 
-                        
+                        ISCENE1.SetActive(false);
+                        ISCENE2.SetActive(false);
+                        ISCENE3.SetActive(true);
 
                         FloorText.text = "10";
-
+                        print("GAME OVER IN switch case");
                        
                         Debug.Log("Scene 9: disabled / Scene 10: enabled");
 
+                        StartCoroutine(GameOver()); 
                         //;
                         break;
                     }
@@ -474,9 +457,7 @@ public class GameHandler : MonoBehaviour
         }
         state = DoorState.Opening;
 
-
-
-        //RuntimeManager.PlayOneShot("event:/InGame/Doors");
+        RuntimeManager.PlayOneShot("event:/InGame/Doors");
         
 
 
@@ -560,11 +541,11 @@ public class GameHandler : MonoBehaviour
 
                 if (ritualState == GameState.BROKEN)
                 {
-                    WrongFloor++;
+                   
 
                     if(WrongFloor >=3)
                     {
-                        //StartCoroutine(TimeOutToFinishDEATH()); 
+                       
                     }
 
                 }
@@ -609,10 +590,18 @@ public class GameHandler : MonoBehaviour
         }
         else
         {
+            WrongFloor++;  // nesse momento é 0 depois passa a 1
 
-            ritualState = GameState.BROKEN; 
             print("errou");
             floorSequenceIndex = 0;
+
+            if (WrongFloor >= 2)
+            {
+                ritualState = GameState.BROKEN;
+             
+            }
+
+           
         }
     }
 
@@ -638,44 +627,42 @@ public class GameHandler : MonoBehaviour
         
         
         yield return new WaitForSeconds(6F);
-
-
-        //Shake._canShake = false;
-       // RuntimeManager.PlayOneShot("event:/InGame/LevelArrival");
-        //_music.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
-
-        //_arrival.start();
         SceneLoader(selectedFloor);
         
     }
 
-    private IEnumerator TimeOutToFinish()
+    private IEnumerator GameOver()
     {
-       
+        yield return new WaitForSeconds(3F);
+        LoadGameOver(); 
+        
+    }
+
+    private void LoadGameOver()
+    {
+        print("Level Game over loaded"); 
+        SceneManager.LoadScene("_EndGame");
+    }
+
+    private IEnumerator GameEnd()
+    {
         yield return new WaitForSeconds(5F);
-        ritualState= GameState.FINISH;
-
+        LoadGameEnd();
 
     }
 
-    private IEnumerator TimeOutToFinishDEATH()
+    private void LoadGameEnd()
     {
-
-        yield return new WaitForSeconds(10F);
-        ritualState = GameState.DEAD;
-
-
+        print("Level Game over loaded");
+        SceneManager.LoadScene("_GameComplete");
     }
 
-    private void OnDestroy()
-    {
-        //_arrival.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
-        //_door.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
-        //_music.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
 
-    }
 
-    
+
+
+
+
 
 }
 
