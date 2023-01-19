@@ -10,6 +10,9 @@ public class EndGame : MonoBehaviour
     {
          scene.SetActive(true);
         Time.timeScale= 1.0f;
+
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true; 
     }
 
     public void Restart()
