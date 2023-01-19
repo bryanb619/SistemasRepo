@@ -1,8 +1,12 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.SceneManagement; 
 
 public class FOV : MonoBehaviour
 {
+
+    private enum GameState { MUSTDIE, ULIVE}
+    private GameState state; 
     private bool canSeePlayer;
     public bool CanSeeTarget => canSeePlayer;
 
@@ -23,16 +27,17 @@ public class FOV : MonoBehaviour
     [SerializeField] private Transform fov;
     public Transform PFOV => fov; // Enemy Editor FOV
 
-
-    // Start is called before the first frame update
-    void Start()
+    private void Start()
     {
-        
+        state= GameState.ULIVE;
     }
+
 
     private void Update()
     {
         StartCoroutine(FOVRoutine());
+
+        ConditionCheck();
     }
 
     #region Field of view Routine
@@ -45,6 +50,17 @@ public class FOV : MonoBehaviour
             yield return wait;
             FieldOfViewCheck();
         }
+    }
+
+
+    private void ConditionCheck()
+    {
+        if(state == GameState.MUSTDIE)
+        {
+            SceneManager.LoadScene("_EndGame"); 
+        }
+
+
     }
 
     private void FieldOfViewCheck()
@@ -60,8 +76,13 @@ public class FOV : MonoBehaviour
             {
                 float distanceToTarget = Vector3.Distance(fov.position, target.position);
 
-                if (!Physics.Raycast(fov.position, directionToTarget, distanceToTarget, obstructionMask))
+                if (!Physics.Raycast(fov.position, directionToTarget, distanceToTarget, obstructionMask)) {
+
                     canSeePlayer = true;
+                    state= GameState.MUSTDIE;    
+
+                }
+                    
                 else
                     canSeePlayer = false;
             }

@@ -67,7 +67,7 @@ public class PauseMenu : MonoBehaviour
     }
 
     // method Resume
-    public void Resume()
+    private void Resume()
     {
 
         _pauseMenu.SetActive(false);
@@ -83,7 +83,7 @@ public class PauseMenu : MonoBehaviour
 
     }
     // method pause
-    public void Pause()
+    private void Pause()
     {
 
 

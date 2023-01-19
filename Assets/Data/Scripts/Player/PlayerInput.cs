@@ -16,7 +16,7 @@ public class PlayerInput : MonoBehaviour
         if (hit.gameObject.tag == "Player")
         {
             // change bool in close and open input
-            Handler._canInteract = true;
+            //Handler._canInteract = true;
         }
 
     }
@@ -24,7 +24,7 @@ public class PlayerInput : MonoBehaviour
     {
         if (exit.gameObject.tag == "Player")
         {
-            Handler._canInteract = false;
+            //Handler._canInteract = false;
         }
 
     }

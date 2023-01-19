@@ -1,5 +1,32 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!114 &-9063451252740224457
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/EndGame/slowlowBeats
+  m_EditorClassIdentifier: 
+  Path: event:/EndGame/slowlowBeats
+  Guid:
+    Data1: -978715948
+    Data2: 1311456992
+    Data3: -2011584342
+    Data4: -293695140
+  Banks:
+  - {fileID: -3373280244559411751}
+  IsStream: 1
+  Is3D: 0
+  IsOneShot: 0
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 0
 --- !u!114 &-9034357933149193691
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -69,10 +96,10 @@ MonoBehaviour:
   Path: ../../FMOD/SE/sistemas/Build/Desktop/Master.bank
   Name: Master
   StudioPath: bank:/Master
-  lastModified: 638096770137442595
+  lastModified: 638096911362599418
   FileSizes:
   - Name: Desktop
-    Value: 814528
+    Value: 1154720
   Exists: 1
 --- !u!114 &-2080702648547921495
 MonoBehaviour:
@@ -122,12 +149,14 @@ MonoBehaviour:
   - {fileID: 2006985666257407059}
   - {fileID: 8213185570655414858}
   - {fileID: -5512981804110095159}
+  - {fileID: -9063451252740224457}
+  - {fileID: 5218754421737210008}
   EditorParameters: []
   MasterBanks:
   - {fileID: -3373280244559411751}
   StringsBanks:
   - {fileID: 6904155634316154365}
-  cacheTime: 638096770137452559
+  cacheTime: 638096911362619376
   cacheVersion: 10
 --- !u!114 &2006985666257407059
 MonoBehaviour:
@@ -156,6 +185,33 @@ MonoBehaviour:
   MinDistance: 0
   MaxDistance: 7.6
   Length: 0
+--- !u!114 &5218754421737210008
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/InGame/AI/Heartbeat
+  m_EditorClassIdentifier: 
+  Path: event:/InGame/AI/Heartbeat
+  Guid:
+    Data1: 1405361452
+    Data2: 1093407980
+    Data3: 968947638
+    Data4: -511088276
+  Banks:
+  - {fileID: -3373280244559411751}
+  IsStream: 1
+  Is3D: 1
+  IsOneShot: 0
+  Parameters: []
+  MinDistance: 0
+  MaxDistance: 80
+  Length: 0
 --- !u!114 &6904155634316154365
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -171,10 +227,10 @@ MonoBehaviour:
   Path: ../../FMOD/SE/sistemas/Build/Desktop/Master.strings.bank
   Name: Master.strings
   StudioPath: bank:/Master.strings
-  lastModified: 638096770137452559
+  lastModified: 638096911362619376
   FileSizes:
   - Name: Desktop
-    Value: 972
+    Value: 1066
   Exists: 1
 --- !u!114 &8213185570655414858
 MonoBehaviour:

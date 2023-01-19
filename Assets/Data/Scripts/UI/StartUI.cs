@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using TMPro; 
 
 public class StartUI : MonoBehaviour
 {
@@ -18,9 +19,9 @@ public class StartUI : MonoBehaviour
         SceneManager.LoadScene("Game"); 
     }
 
-    public void ExitGame()
+    public void GameQuit()
     {
-        print("quit"); 
+        print("quit");
         Application.Quit();
     }
 
