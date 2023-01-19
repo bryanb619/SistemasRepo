@@ -245,7 +245,7 @@ namespace UnityTemplateProjects
             delta *= 0.1f; // Account for sensitivity setting on old Mouse X and Y axes.
             return delta;
 #else
-            return new Vector2(Input.GetAxis("Mouse X"), Input.GetAxis("Mouse Y"));
+            return new Vector2(Input.GetAxis("Mouse_X"), Input.GetAxis("Mouse_Y"));
 #endif
         }
 
