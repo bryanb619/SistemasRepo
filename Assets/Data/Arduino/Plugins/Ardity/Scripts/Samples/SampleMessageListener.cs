@@ -7,7 +7,6 @@
  */
 
 using UnityEngine;
-using System.Collections;
 
 /**
  * When creating your message listeners you need to implement these two methods:
@@ -28,8 +27,9 @@ public class SampleMessageListener : MonoBehaviour
     void OnConnectionEvent(bool success)
     {
         if (success)
-            Debug.Log("Connection established");
+            Debug.Log("Connection established on success");
         else
-            Debug.Log("Connection attempt failed or disconnection detected");
+            Debug.Log("Connection attempt failed or disconnection detected" +
+                "Check Device conection");
     }
 }

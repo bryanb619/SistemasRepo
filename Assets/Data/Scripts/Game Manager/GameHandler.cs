@@ -95,7 +95,7 @@ public class GameHandler : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        RitualCheck();
+        //RitualCheck();
 
        
 
@@ -371,7 +371,10 @@ public class GameHandler : MonoBehaviour
                         StartCoroutine(GameEnd()); 
                         break;
                     }
-                default: { break; }
+                default: 
+                    {
+                        break; 
+                    }
             }
 
         }
@@ -381,7 +384,7 @@ public class GameHandler : MonoBehaviour
             switch (WrongFloor)
             {
 
-                case 2:
+                case 1:
                     {
                         // TO DO: 
                         // disable current scene
@@ -399,12 +402,15 @@ public class GameHandler : MonoBehaviour
                         ISCENE1.SetActive(true); 
                         ISCENE2.SetActive(false);
 
-                        FloorText.text = "8";
+                        //FloorText.text = "8";
+                        FloorText.text = Floor.ToString();
+
+
                         Debug.Log("Scene previous: disabled / Scene 8: enabled");
                         break;
                     }
 
-                case 3:
+                case 2:
                     {
                         Scene1.SetActive(false);
                         Scene2.SetActive(false); 
@@ -419,13 +425,14 @@ public class GameHandler : MonoBehaviour
                         ISCENE1.SetActive(false); 
                         ISCENE2.SetActive(true);
 
-                        FloorText.text = "9";
+                        //FloorText.text = "9";
+                        FloorText.text = Floor.ToString();
 
                         Debug.Log("Scene 8: disabled / Scene 9: enabled");
                         break;
                     }
 
-                case 4:
+                case 3:
                     {
                         Scene1.SetActive(false);
                         Scene2.SetActive(false); 
@@ -442,7 +449,9 @@ public class GameHandler : MonoBehaviour
                         ISCENE2.SetActive(false);
                         ISCENE3.SetActive(true);
 
-                        FloorText.text = "10";
+                        //FloorText.text = "10";
+
+                        FloorText.text = Floor.ToString();
                         print("GAME OVER IN switch case");
                        
                         Debug.Log("Scene 9: disabled / Scene 10: enabled");
@@ -543,10 +552,8 @@ public class GameHandler : MonoBehaviour
                 {
                    
 
-                    if(WrongFloor >=3)
-                    {
-                       
-                    }
+                  
+                    
 
                 }
 
@@ -593,9 +600,10 @@ public class GameHandler : MonoBehaviour
             WrongFloor++;  // nesse momento é 0 depois passa a 1
 
             print("errou");
+
             floorSequenceIndex = 0;
 
-            if (WrongFloor >= 2)
+            if (WrongFloor >= 0)
             {
                 ritualState = GameState.BROKEN;
              
@@ -633,7 +641,7 @@ public class GameHandler : MonoBehaviour
 
     private IEnumerator GameOver()
     {
-        yield return new WaitForSeconds(3F);
+        yield return new WaitForSeconds(5F);
         LoadGameOver(); 
         
     }
@@ -646,7 +654,7 @@ public class GameHandler : MonoBehaviour
 
     private IEnumerator GameEnd()
     {
-        yield return new WaitForSeconds(5F);
+        yield return new WaitForSeconds(7F);
         LoadGameEnd();
 
     }
