@@ -42,7 +42,10 @@ public class GameHandler : MonoBehaviour
     private int selectedFloor;
 
 
-    private int WrongFloor = 0; 
+    private int WrongFloor = 0;
+
+
+    private int currentFloor; 
 
 
     // level input bools
@@ -81,8 +84,9 @@ public class GameHandler : MonoBehaviour
 
         ritualState = GameState.ACTIVE; 
         state = DoorState.Opening;
-     
 
+
+        currentFloor = 1; 
         FloorText.text = "1";
 
 
@@ -156,7 +160,7 @@ public class GameHandler : MonoBehaviour
     private void PlayerInput()
     {
 
-        if ( state == DoorState.Open)
+        if (state == DoorState.Open)
         {
             
             if (Input.GetKeyDown(KeyCode.Alpha1))
@@ -164,8 +168,14 @@ public class GameHandler : MonoBehaviour
 
                 print("CLOSING");
                 selectedFloor = 1;
-                ClosingDoorSound(); 
-                state = DoorState.Closing;
+
+               if(currentFloor != selectedFloor) 
+               {
+                    ClosingDoorSound();
+                    state = DoorState.Closing;
+
+               }
+               
                 
 
 
@@ -173,53 +183,85 @@ public class GameHandler : MonoBehaviour
             else if (Input.GetKeyDown(KeyCode.Alpha2))
             {
                 selectedFloor = 2;
-                ClosingDoorSound();
-                state = DoorState.Closing;
-                
+                if (currentFloor != selectedFloor)
+                {
+                    ClosingDoorSound();
+                    state = DoorState.Closing;
+
+                }
+
 
             }
             else if (Input.GetKeyDown(KeyCode.Alpha3))
             {
                 selectedFloor = 3;
-                ClosingDoorSound();
-                state = DoorState.Closing;
-                
+                if (currentFloor != selectedFloor)
+                {
+                    ClosingDoorSound();
+                    state = DoorState.Closing;
+
+                }
+
             }
             else if (Input.GetKeyDown(KeyCode.Alpha4))
             {
                 selectedFloor = 4;
-                ClosingDoorSound();
-                state = DoorState.Closing;
+                if (currentFloor != selectedFloor)
+                {
+                    ClosingDoorSound();
+                    state = DoorState.Closing;
+
+                }
             }
             else if (Input.GetKeyDown(KeyCode.Alpha5))
             {
                 selectedFloor = 5;
-                ClosingDoorSound();
-                state = DoorState.Closing;
+                if (currentFloor != selectedFloor)
+                {
+                    ClosingDoorSound();
+                    state = DoorState.Closing;
+
+                }
             }
             else if (Input.GetKeyDown(KeyCode.Alpha6))
             {
                 selectedFloor = 6;
-                ClosingDoorSound();
-                state = DoorState.Closing;
+                if (currentFloor != selectedFloor)
+                {
+                    ClosingDoorSound();
+                    state = DoorState.Closing;
+
+                }
             }
             else if (Input.GetKeyDown(KeyCode.Alpha7))
             {
                 selectedFloor = 7;
-                ClosingDoorSound();
-                state = DoorState.Closing;
+                if (currentFloor != selectedFloor)
+                {
+                    ClosingDoorSound();
+                    state = DoorState.Closing;
+
+                }
             }
             else if (Input.GetKeyDown(KeyCode.Alpha8))
             {
                 selectedFloor = 8;
-                ClosingDoorSound();
-                state = DoorState.Closing;
+                if (currentFloor != selectedFloor)
+                {
+                    ClosingDoorSound();
+                    state = DoorState.Closing;
+
+                }
             }
             else if (Input.GetKeyDown(KeyCode.Alpha9))
             {
                 selectedFloor = 9;
-                ClosingDoorSound();
-                state = DoorState.Closing;
+                if (currentFloor != selectedFloor)
+                {
+                    ClosingDoorSound();
+                    state = DoorState.Closing;
+
+                }
 
 
             }
@@ -266,6 +308,8 @@ public class GameHandler : MonoBehaviour
                         FloorText.text = "1";
                         Debug.Log("Scene 1: disabled / Scene 2: enabled");
 
+                        currentFloor = Floor;
+
                         break;
                     }
 
@@ -283,6 +327,8 @@ public class GameHandler : MonoBehaviour
                         FloorText.text = "2";
 
                         Debug.Log("Scene 2: disabled / Scene 3: enabled");
+
+                        currentFloor = Floor;
                         break;
                     }
 
@@ -300,6 +346,8 @@ public class GameHandler : MonoBehaviour
                         FloorText.text = "3";
 
                         Debug.Log("Scene 3: disabled / Scene 4: enabled");
+
+                        currentFloor = Floor;
                         break;
                     }
 
@@ -316,6 +364,7 @@ public class GameHandler : MonoBehaviour
 
                         FloorText.text = "4";
 
+                        currentFloor = Floor;
 
                         break;
                     }
@@ -332,6 +381,8 @@ public class GameHandler : MonoBehaviour
 
                         FloorText.text = "5";
 
+                        currentFloor = Floor;
+
                         break;
                     }
 
@@ -347,6 +398,8 @@ public class GameHandler : MonoBehaviour
                         Scene9.SetActive(false);
 
                         FloorText.text = "8";
+
+                        currentFloor = Floor;
 
                         //SceneManager.LoadScene("_EndGame");
 
@@ -368,7 +421,10 @@ public class GameHandler : MonoBehaviour
                         //StartCoroutine(TimeOutToFinish());
 
                         //SceneManager.LoadScene("_EndGame");
+
+                        currentFloor = Floor;
                         StartCoroutine(GameEnd()); 
+
                         break;
                     }
                 default: 
@@ -405,6 +461,7 @@ public class GameHandler : MonoBehaviour
                         //FloorText.text = "8";
                         FloorText.text = Floor.ToString();
 
+                        currentFloor = selectedFloor; 
 
                         Debug.Log("Scene previous: disabled / Scene 8: enabled");
                         break;
@@ -427,6 +484,8 @@ public class GameHandler : MonoBehaviour
 
                         //FloorText.text = "9";
                         FloorText.text = Floor.ToString();
+
+                        currentFloor = selectedFloor;
 
                         Debug.Log("Scene 8: disabled / Scene 9: enabled");
                         break;
@@ -452,6 +511,8 @@ public class GameHandler : MonoBehaviour
                         //FloorText.text = "10";
 
                         FloorText.text = Floor.ToString();
+
+                        currentFloor = selectedFloor;
                         print("GAME OVER IN switch case");
                        
                         Debug.Log("Scene 9: disabled / Scene 10: enabled");

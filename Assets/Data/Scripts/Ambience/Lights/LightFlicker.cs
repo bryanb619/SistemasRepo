@@ -7,7 +7,7 @@ public class LightFlicker : MonoBehaviour
     private new Light light; // ATTACHING TO SPECIFIED LIGHTS
 
     [Tooltip("Minimum random light intensity")]
-    private float minIntensity = 0f;
+    [SerializeField]private float minIntensity = 0.5f;
 
     [Tooltip("Maximum random light intensity")]
     [SerializeField]private float maxIntensity = 1f;
